@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>User Details Form</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <form id="userDetailsForm" novalidate>
+    <h2>User Details Form</h2>
+
+    <label for="fullname">Full Name</label>
+    <input type="text" id="fullname" name="fullname" required placeholder="Your full name" />
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required placeholder="you@example.com" />
+
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" name="phone" required pattern="^\+?\d{10,15}$" placeholder="+1234567890" />
+
+    <label for="dob">Date of Birth</label>
+    <input type="date" id="dob" name="dob" required max="" />
+
+    <label for="gender">Gender</label>
+    <select id="gender" name="gender" required>
+      <option value="" disabled selected>Select your gender</option>
+      <option value="female">Female</option>
+      <option value="male">Male</option>
+      <option value="nonbinary">Non-binary</option>
+      <option value="prefer_not_say">Prefer not to say</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label for="address">Address</label>
+    <textarea id="address" name="address" placeholder="Your full address" required></textarea>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required minlength="6" placeholder="Create a password" />
+
+    <label for="confirmPassword">Confirm Password</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6" placeholder="Confirm your password" />
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    // Set max attribute for date of birth to today
+    document.getElementById('dob').max = new Date().toISOString().split('T')[0];
+
+    const form = document.getElementById('userDetailsForm');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        alert('Please fill out all required fields correctly.');
+        return;
+      }
+
+      // Check if password and confirm password match
+      const pwd = form.password.value;
+      const cpwd = form.confirmPassword.value;
+      if (pwd !== cpwd) {
+        alert('Passwords do not match. Please re-enter.');
+        form.confirmPassword.focus();
+        return;
+      }
+
+      // If all validations pass, show a success message
+      alert('Thank you, ' + form.fullname.value + '. Your details have been submitted!');
+
+      form.reset();
+    });
+  </script>
+</body>
+</html>
